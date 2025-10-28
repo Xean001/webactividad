@@ -1,6 +1,7 @@
 package com.ejemplo.demo.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "alumnos")
@@ -14,18 +15,22 @@ public class Alumno {
     private String nombre;
     
     private String apellido;
+    
+    @ManyToOne
+    @JoinColumn(name = "grupo_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Grupo grupo;
 
-    // Constructores
     public Alumno() {
     }
 
-    public Alumno(int id, String nombre, String apellido) {
+    public Alumno(int id, String nombre, String apellido, Grupo grupo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.grupo = grupo;
     }
 
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -48,5 +53,13 @@ public class Alumno {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 }
